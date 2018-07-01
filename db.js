@@ -72,7 +72,6 @@ const Listing = db.define('listings', {
 });
 
 User.hasMany(Listing);
-// User.hasMany(Listing, {foreignKey: 'id', sourceKey: 'user_id'});
 
 db.sync().then(() => console.log("Database has been synced! "))
          .catch((err) => console.log("Error creating database! "));
