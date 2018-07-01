@@ -15,6 +15,7 @@ route.post('/signup', (req, res) => {
    }).then((user) => {
        res.status(201).send(user)
    }).catch((err) => {
+       console.log(err);
        res.status(501).send({
            error: "Could not add new user"
        })

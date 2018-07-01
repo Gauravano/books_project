@@ -23,17 +23,17 @@ const User = db.define('users', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        // validate: {
-        //     isEmail: true
-        // }
+        validate: {
+            isEmail: true
+        }
     },
-    // conatct: {
-    //     type: Sequelize.STRING,
-    //     validate: {
-    //         isNumeric: true,
-    //         is: ["^[0-9]+$", "i"]
-    //     }
-    // },
+    contact: {
+        type: Sequelize.STRING,
+        validate: {
+            isNumeric: true,
+            len: [10,12]
+        }
+    },
     address: {
         type: Sequelize.STRING
     },
@@ -63,7 +63,7 @@ const Listing = db.define('listings', {
    },
     price: {
        type: Sequelize.INTEGER,
-        allowNull: false
+       allowNull: false
     },
     condition: {
        type: Sequelize.ENUM,
