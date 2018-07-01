@@ -1,6 +1,25 @@
 const User = require('../../db').User;
 const route = require('express').Router();
 
+route.get('/signup', (req, res) => {
+
+    if (!req.session.user){
+        res.status(200).send(
+        );
+    }else {
+        res.status(301).send("Logout from the current session first. Thank you.");
+    }
+});
+
+route.get('/login', (req, res) => {
+
+    if (!req.session.user){
+        res.status(200).send(
+        );
+    }else {
+        res.status(301).send("Logout from the current session first. Thank you.");
+    }
+});
 
 route.post('/signup', (req, res) => {
 
@@ -36,6 +55,7 @@ route.post('/login', (req, res) => {
             return res.status(404).send();
         } else{
             if(user.password === req.body.password){
+                req.session.user = user;
                 return res.status(201).send(user);
             }else{
                 return res.status(400).send({
@@ -52,5 +72,26 @@ route.post('/login', (req, res) => {
         })
     })
 });
+
+route.post('/logout', (req, res) => {
+
+    console.log("Logout Request: ",req.body);
+
+    if(req.session.user){
+        req.session.destroy();
+        return res.status(200).send();
+    }else{
+        return res.status(400).send();
+    }
+});
+
+// route.get('/dashboard', function (req, res) {
+//     if(!req.session.user){
+//         return res.status(401).send();
+//     }else{
+//         console.log("Current user", req.session.user);
+//         return res.status(200).send("Welcome");
+//     }
+// });
 
 exports = module.exports = route;
