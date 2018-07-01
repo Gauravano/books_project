@@ -14,8 +14,7 @@ route.get('/signup', (req, res) => {
 route.get('/login', (req, res) => {
 
     if (!req.session.user){
-        res.status(200).send(
-        );
+        res.status(200).send();
     }else {
         res.status(301).send("Logout from the current session first. Thank you.");
     }
@@ -23,7 +22,11 @@ route.get('/login', (req, res) => {
 
 route.post('/signup', (req, res) => {
 
-    console.log("Signup Request: ",req.body);
+   console.log("Signup Request: ",req.body);
+
+    if (req.session.user){
+        return res.status(301).send("Logout from the current session first. Thank you.");
+    }
 
    User.create({
        name: req.body.name,
@@ -45,6 +48,10 @@ route.post('/signup', (req, res) => {
 route.post('/login', (req, res) => {
 
     console.log("Login Request: ",req.body);
+
+    if (req.session.user){
+        return res.status(301).send("Logout from the current session first. Thank you.");
+    }
 
     User.find({
         where: {
