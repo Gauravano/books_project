@@ -23,17 +23,17 @@ const User = db.define('users', {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-            isEmail: true
-        }
+        // validate: {
+        //     isEmail: true
+        // }
     },
-    conatct_no: {
-        type: Sequelize.STRING,
-        validate: {
-            isNumeric: true,
-            is: ["^[0-9]+$", "i"]
-        }
-    },
+    // conatct: {
+    //     type: Sequelize.STRING,
+    //     validate: {
+    //         isNumeric: true,
+    //         is: ["^[0-9]+$", "i"]
+    //     }
+    // },
     address: {
         type: Sequelize.STRING
     },
