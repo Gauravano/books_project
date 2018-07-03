@@ -4,8 +4,7 @@ const route = require('express').Router();
 route.get('/signup', (req, res) => {
 
     if (!req.session.user){
-        res.status(200).send(
-        );
+        res.status(200).send();
     }else {
         res.status(301).send("Logout from the current session first. Thank you.");
     }
@@ -36,6 +35,7 @@ route.post('/signup', (req, res) => {
        address: req.body.address,
        password: req.body.password
    }).then((user) => {
+       req.session.user = user;
        res.status(201).send(user)
    }).catch((err) => {
        console.log(err);

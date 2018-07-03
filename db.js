@@ -79,6 +79,26 @@ const Wishlist = db.define('wishlist', {
     }
 });
 
+const Message = db.define('messages', {
+   id: {
+       type: Sequelize.INTEGER,
+       autoIncrement: true,
+       primaryKey: true
+   },
+   content: {
+       type: Sequelize.TEXT,
+       allowNull: false
+   },
+   senderId: {
+       type: Sequelize.INTEGER,
+       allowNull: false
+   },
+   listingId:{
+       type: Sequelize.INTEGER,
+       allowNull: false
+   }
+});
+
 User.hasMany(Listing);
 User.hasMany(Wishlist);
 Listing.hasMany(Wishlist);
@@ -87,5 +107,5 @@ db.sync().then(() => console.log("Database has been synced! "))
          .catch((err) => console.log("Error creating database! "));
 
 exports = module.exports = {
-    User, Listing, Wishlist
+    User, Listing, Wishlist, Message
 };
