@@ -13,7 +13,7 @@ route.get('/signup', (req, res) => {
 route.get('/login', (req, res) => {
 
     if (!req.session.user){
-        res.status(200).send();
+        res.status(200).send("OK");
     }else {
         res.status(301).send("Logout from the current session first. Thank you.");
     }
@@ -27,6 +27,16 @@ route.post('/signup', (req, res) => {
         return res.status(301).send("Logout from the current session first. Thank you.");
     }
 
+    User.find({
+      where: {
+        email: req.body.email
+      }
+    }).then((user) => {
+      if(user){
+        return res.status(406).send("User with this email id already exist! ");
+      }
+    })
+
    User.create({
        name: req.body.name,
        email: req.body.email,
@@ -36,11 +46,11 @@ route.post('/signup', (req, res) => {
        password: req.body.password
    }).then((user) => {
        req.session.user = user;
-       res.status(201).send(user)
+       res.status(201).send(user);
    }).catch((err) => {
        console.log(err);
        res.status(501).send({
-           error: "Could not add new user"
+           message: "Could not add new user"
        })
    })
 });
@@ -75,7 +85,7 @@ route.post('/login', (req, res) => {
     }).catch((err) => {
         console.log(err);
         res.status(501).send({
-            error: "Could not login!"
+            message: "Could not login!"
         })
     })
 });
@@ -86,9 +96,13 @@ route.post('/logout', (req, res) => {
 
     if(req.session.user){
         req.session.destroy();
-        return res.status(200).send();
+        return res.status(200).send({
+          message: "successfully logged out!"
+        });
     }else{
-        return res.status(400).send();
+        return res.status(400).send({
+          message: "Logout failed!"
+        });
     }
 });
 

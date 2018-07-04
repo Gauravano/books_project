@@ -1,20 +1,23 @@
 const Wishlist = require('../../db').Wishlist;
+const Listing = require('../../db').Listing;
 const route = require('express').Router();
 
 route.get('/', (req, res) => {
     if(!req.session.user){
         return res.status(400).send("Please login to see your wishlist.");
     }
-
-    Wishlist.findAll({
-        where: {
-            userId: req.session.user.id
-        }
+  
+    Listing.findAll({
+      include: [{
+        model: Wishlist,
+        where: {userId: req.session.user.id}
+      }]
     }).then((items) => {
-        res.status(200).send(items);
+          res.status(200).send(items);
     }).catch((err) => {
         res.status(500).send("Couldn't fetch wishlist ");
     })
+
 });
 
 route.post('/',(req,res) => {

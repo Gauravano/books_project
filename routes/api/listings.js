@@ -31,7 +31,7 @@ route.get('/:id',(req,res) => {
     })
 });
 
-route.post('/create', (req,res) => {
+route.post('/add', (req,res) => {
    if(!req.session.user){
        return res.status(401).send("Please login to create listing.");
    }
