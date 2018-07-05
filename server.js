@@ -3,6 +3,8 @@ const session = require('express-session');
 
 const app = express();
 
+
+app.use('/', express.static('public'));
 app.use('/uploads', express.static('uploads'));
 app.use(session({secret: "hello", resave: false, saveUninitialized: true}));
 app.use(express.json());
