@@ -68,6 +68,9 @@ const Listing = db.define('listings', {
     condition: {
        type: Sequelize.ENUM,
        values: ['New', 'Almost New', 'Slight damage', 'Worn']
+    },
+    book_image_url: {
+       type: Sequelize.STRING
     }
 });
 

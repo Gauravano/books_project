@@ -1,5 +1,42 @@
 const Listing = require('../../db').Listing;
 const route = require('express').Router();
+const multer = require('multer');
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb){
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+});
+
+// Init Upload
+const upload = multer({
+    storage: storage,
+    limits:{
+        fileSize: 1024 * 1024 * 10
+    },
+    fileFilter: function(req, file, cb){
+        checkFileType(file, cb);
+    }
+});
+
+
+// Check File Type
+function checkFileType(file, cb){
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+
+    if(mimetype){
+        return cb(null,true);
+    } else {
+        cb('Error: Images Only!');
+    }
+}
 
 route.get('/', (req, res) => {
     Listing.findAll()
@@ -31,19 +68,21 @@ route.get('/:id',(req,res) => {
     })
 });
 
-route.post('/add', (req,res) => {
+route.post('/add', upload.single('bookImage'), (req,res, next) => {
    if(!req.session.user){
        return res.status(401).send("Please login to create listing.");
    }
 
-   console.log(req.body);
+   console.log("Request file: ", req.file);
+   console.log("Request body: ", req.body);
 
    Listing.create({
        book_name: req.body.book_name,
        author_name: req.body.author_name,
        price: req.body.price,
        condition: req.body.condition,
-       userId: req.session.user.id
+       userId: req.session.user.id,
+       book_image_url: req.file.path
    }).then((listing) => {
        res.status(201).send(listing);
    }).catch((err) => {
@@ -79,7 +118,6 @@ route.get('/delete/:id', (req,res) => {
         return res.status(500).send("Listing can't be deleted!");
     })
 
-
 });
 
-exports = module.exports = route;
+module.exports = route;
