@@ -1,6 +1,25 @@
 const User = require('../../db').User;
 const route = require('express').Router();
 
+
+
+route.get('/:id', (req,res) => {
+
+  User.find({
+    where: {
+      id: req.params.id
+    }
+  }).then((user) => {
+    if(user){
+      return res.status(200).send(user);
+    }else{
+      return res.status(400).send("No user with this Id found!");
+    }
+  }).catch((err) => {
+    return res.status(500).send("Can't fetch at current time!");
+  })
+});  
+
 route.get('/signup', (req, res) => {
 
     if (!req.session.user){
@@ -114,5 +133,23 @@ route.post('/logout', (req, res) => {
 //         return res.status(200).send("Welcome");
 //     }
 // });
+
+route.get('/:id', (req,res) => {
+
+  User.find({
+    where: {
+      id: req.params.id
+    }
+  }).then((user) => {
+    if(user){
+      return res.status(200).send(user);
+    }else{
+      return res.status(400).send("No user with this Id found!");
+    }
+  }).catch((err) => {
+    return res.status(500).send("Can't fetch at current time!");
+  })
+
+});
 
 exports = module.exports = route;

@@ -50,6 +50,26 @@ route.get('/', (req, res) => {
         })
 });
 
+route.get('/user', (req, res) => {
+
+    if(!req.session.user){
+        return res.status(401).send("Please login to view your listings.");
+    }
+
+      Listing.findAll({
+        where: {
+          userId: req.session.user.id
+        }
+      }).then((listings) => {
+            res.status(200).send(listings);
+        })
+        .catch((err) => {
+            res.status(500).send({
+                error: "Could not fetch book listings. Sorry :( "
+            })
+        })
+});
+
 route.get('/:id',(req,res) => {
     Listing.find({
         where: {

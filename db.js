@@ -95,16 +95,13 @@ const Message = db.define('messages', {
    senderId: {
        type: Sequelize.INTEGER,
        allowNull: false
-   },
-   listingId:{
-       type: Sequelize.INTEGER,
-       allowNull: false
    }
 });
 
 User.hasMany(Listing);
 User.hasMany(Wishlist);
 Listing.hasMany(Wishlist);
+Message.belongsTo(Listing);
 
 db.sync().then(() => console.log("Database has been synced! "))
          .catch((err) => console.log("Error creating database! "));
