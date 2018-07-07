@@ -71,6 +71,9 @@ const Listing = db.define('listings', {
     },
     book_image_url: {
        type: Sequelize.STRING
+    },
+    user_name: {
+      type: Sequelize.STRING
     }
 });
 
