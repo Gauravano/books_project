@@ -1174,7 +1174,6 @@ var SignupComponent = /** @class */ (function () {
             contact: [''],
             college: [''],
             email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].email, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]],
-            confirmPassword: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required],
             address: [''],
         });
