@@ -2,20 +2,20 @@ const User = require('../../db').User;
 const route = require('express').Router();
 
 route.get('/signup', (req, res) => {
-
-    if (!req.session.user){
-        res.status(200).send();
+console.log("current session", req.session.user);
+    if (req.session.user == undefined){
+        res.status(200).send("Ok");
     }else {
-        res.status(301).send("Logout from the current session first. Thank you.");
+        res.status(400).send("Logout from the current session first. Thank you.");
     }
 });
 
 route.get('/login', (req, res) => {
-
-    if (!req.session.user){
+console.log("current session", req.session.user);
+    if (req.session.user == undefined){
         res.status(200).send("OK");
     }else {
-        res.status(301).send("Logout from the current session first. Thank you.");
+        res.status(400).send("Logout from the current session first. Thank you.");
     }
 });
 
@@ -40,8 +40,8 @@ route.post('/signup', (req, res) => {
 
    console.log("Signup Request: ",req.body);
 
-    if (req.session.user){
-        return res.status(301).send("Logout from the current session first. Thank you.");
+    if (req.session.user != undefined ){
+        return res.status(400).send("Logout from the current session first. Thank you.");
     }
 
     User.find({
@@ -76,8 +76,8 @@ route.post('/login', (req, res) => {
 
     console.log("Login Request: ",req.body);
 
-    if (req.session.user){
-        return res.status(301).send("Logout from the current session first. Thank you.");
+    if (req.session.user != undefined){
+        return res.status(400).send("Logout from the current session first. Thank you.");
     }
 
     User.find({
