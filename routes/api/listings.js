@@ -2,11 +2,16 @@ const Listing = require('../../db').Listing;
 const route = require('express').Router();
 const multer = require('multer');
 
+var cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: 'gauravano',
+  api_key: '383633388983891',
+  api_secret: 'MaqAJcecyMtfheySU4glmqVkBmk'
+});
+
+
 // Set The Storage Engine
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads/');
-    },
     filename: function(req, file, cb){
         cb(null, new Date().toISOString() + file.originalname);
     }
@@ -195,23 +200,26 @@ route.post('/add', upload.single('bookImage'), (req,res, next) => {
    console.log("Request file: ", req.file);
    console.log("Request body: ", req.body);
 
-   Listing.create({
-       book_name: req.body.book_name,
-       author_name: req.body.author_name,
-       price: req.body.price,
-       condition: req.body.condition,
-       userId: req.session.user.id,
-       book_image_url: req.file.path,
-       user_name: req.session.user.name
-   }).then((listing) => {
-       res.status(201).send(listing);
-   }).catch((err) => {
-       console.log(err);
-       res.status(500).send({
-           message: "Could not create new listing. Sorry :("
-       })
-   })
-});
+   cloudinary.uploader.upload(req.file.path, function(result) {
+
+     Listing.create({
+         book_name: req.body.book_name,
+         author_name: req.body.author_name,
+         price: req.body.price,
+         condition: req.body.condition,
+         userId: req.session.user.id,
+         book_image_url: result.secure_url,
+         user_name: req.session.user.name
+     }).then((listing) => {
+         res.status(201).send(listing);
+     }).catch((err) => {
+         console.log(err);
+         res.status(500).send({
+             message: "Could not create new listing. Sorry :("
+         })
+     })
+})
+})
 
 route.get('/delete/:id', (req,res) => {
 
