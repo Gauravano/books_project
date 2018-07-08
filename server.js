@@ -14,12 +14,13 @@ app.use(express.urlencoded({extended: true}));
 app.use('/api', require('./routes/api').route);
 app.set('port', (process.env.PORT || 4000));
 
+app.use('/listings/:id',express.static('public'));
 app.use('/listings/add',express.static('public'));
 app.use('/messages',express.static('public'));
 app.use('/wishlist',express.static('public'));
-
-
-
+app.use('/signup',express.static('public'));
+app.use('/login',express.static('public'));
+app.use('/dashboard',express.static('public'));
 
 app.listen(app.get('port'), function () {
    console.log("Node app is running at Port: ", app.get('port'));
