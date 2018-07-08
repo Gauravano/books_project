@@ -1,13 +1,14 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('bookish', 'gaurav_bookish', 'Bookish 1', {
-    host: 'localhost',
+const db = new Sequelize(env('DB_DATABASE', 'heroku_7697999bfbc1608'), env('DB_USERNAME', 'b5f842e84e26ba'), env('DB_PASSWORD','b5ad92e4' ), {
+    host: env('DB_HOST', 'us-cdbr-iron-east-04.cleardb.net'),
     dialect: 'mysql',
     pool:{
         min: 0,
         max: 5
     }
 });
+
 
 const User = db.define('users', {
     id: {
