@@ -4,7 +4,9 @@ const Listing = require('../../db').Listing;
 
 route.get('/', (req,res) => {
   if(!req.session.user){
-      return res.status(400).send("Please login to see the messages.");
+      return res.status(400).send({
+      message:  "Please login to see the messages."
+      });
   }
 
   Message.findAll({
@@ -15,7 +17,9 @@ route.get('/', (req,res) => {
   }).then((items) => {
         res.status(200).send(items);
   }).catch((err) => {
-      res.status(500).send("Couldn't fetch wishlist ");
+      res.status(500).send({
+      message: "Couldn't fetch wishlist "
+    });
   })
 });
 
@@ -24,7 +28,9 @@ route.get('/:id', (req,res) => {
   console.log("Messages");
 
     if(!req.session.user){
-        return res.status(400).send("Please login to see the messages.");
+        return res.status(400).send({
+        message: "Please login to see the messages."
+      });
     }
 
     Message.findAll({
@@ -34,7 +40,9 @@ route.get('/:id', (req,res) => {
     }).then((messages) => {
         return res.status(200).send(messages);
     }).catch((err) => {
-        return res.status(400).send("Invalid listing Id");
+        return res.status(400).send({
+          message: "Invalid listing Id"
+        });
     });
 
   //   Listing.find({
@@ -57,7 +65,7 @@ route.get('/:id', (req,res) => {
   //     }).then((messages) => {
   //         res.status(200).send(messages);
   //     }).catch((err) => {
-  //         error: "Can't fetch messages!"
+  //         message: "Can't fetch messages!"
   //     })
   // } else {
   //   Message.findAll({
@@ -68,14 +76,16 @@ route.get('/:id', (req,res) => {
   //   }).then((messages) => {
   //       res.status(200).send(messages);
   //   }).catch((err) => {
-  //       error: "Can't fetch messages!"
+  //       message: "Can't fetch messages!"
   //   })
   // }
 });
 
 route.post('/create', (req,res) => {
     if(!req.session.user){
-        return res.status(400).send("Please login to send message to the book owner.");
+        return res.status(400).send({
+          message: "Please login to send message to the book owner."
+        });
     }
 
     console.log("Message: ",req.body);
@@ -88,7 +98,9 @@ route.post('/create', (req,res) => {
         res.status(201).send(message);
     }).catch((err) => {
         console.log(err);
-        res.status(500).send("Couldn't send message to the book owner.");
+        res.status(500).send({
+          message: "Couldn't send message to the book owner."
+        });
     })
 });
 

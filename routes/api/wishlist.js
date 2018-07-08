@@ -4,9 +4,11 @@ const route = require('express').Router();
 
 route.get('/', (req, res) => {
     if(!req.session.user){
-        return res.status(400).send("Please login to see your wishlist.");
+        return res.status(400).send({
+        message: "Please login to see your wishlist."
+      });
     }
-  
+
     Listing.findAll({
       include: [{
         model: Wishlist,
@@ -15,14 +17,18 @@ route.get('/', (req, res) => {
     }).then((items) => {
           res.status(200).send(items);
     }).catch((err) => {
-        res.status(500).send("Couldn't fetch wishlist ");
+        res.status(500).send({
+          message: "Couldn't fetch wishlist "
+      });
     })
 
 });
 
 route.post('/',(req,res) => {
     if(!req.session.user){
-        return res.status(400).send("Please login to see your wishlist.");
+        return res.status(400).send({
+          message: "Please login to see your wishlist."
+        });
     }
 
     Wishlist.create({
@@ -31,13 +37,17 @@ route.post('/',(req,res) => {
     }).then((item) => {
         res.status(201).send(item);
     }).catch((err) => {
-        res.status(500).send("Couldn't add item to wishlist ");
+        res.status(500).send({
+          message: "Couldn't add item to wishlist "
+        });
     })
 });
 
 route.post('/delete',(req,res) => {
     if(!req.session.user){
-        return res.status(401).send("Please login to delete item from wishlist");
+        return res.status(401).send({
+          message: "Please login to delete item from wishlist"
+      });
     }
 
     Wishlist.find({
@@ -54,12 +64,18 @@ route.post('/delete',(req,res) => {
                 }
             });
 
-        return res.status(200).send("Book removed from wishlist successfully!");
+        return res.status(200).send({
+          message: "Book removed from wishlist successfully!"
+        });
     }else{
-        return res.status(200).send("No book with such detail found!");
+        return res.status(200).send({
+          message: "No book with such detail found!"
+      });
     }
     }).catch((err) => {
-        return res.status(500).send("Book can't be removed from wishlist!");
+        return res.status(500).send({
+          message: "Book can't be removed from wishlist!"
+        });
     })
 });
 

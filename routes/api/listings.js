@@ -34,7 +34,7 @@ function checkFileType(file, cb){
     if(mimetype){
         return cb(null,true);
     } else {
-        cb('Error: Images Only!');
+        cb('message: Images Only!');
     }
 }
 
@@ -45,7 +45,7 @@ route.get('/', (req, res) => {
         })
         .catch((err) => {
             res.status(500).send({
-                error: "Could not fetch book listings. Sorry :( "
+                message: "Could not fetch book listings. Sorry :( "
             })
         })
 });
@@ -53,7 +53,9 @@ route.get('/', (req, res) => {
 route.get('/user', (req, res) => {
 
     if(!req.session.user){
-        return res.status(401).send("Please login to view your listings.");
+        return res.status(401).send({
+            message: "Please login to view your listings."
+        });
     }
 
       Listing.findAll({
@@ -65,7 +67,7 @@ route.get('/user', (req, res) => {
         })
         .catch((err) => {
             res.status(500).send({
-                error: "Could not fetch book listings. Sorry :( "
+                message: "Could not fetch book listings. Sorry :( "
             })
         })
 });
@@ -175,13 +177,14 @@ route.get('/:id',(req,res) => {
         if(listing){
             return res.status(200).send(listing);
         }else{
-            return res.status(404).send("No listing with such id exist!");
-        }
-    }).catch((err) => {
-        return res.status(500).send({
-            error: "Could not fetch book listings. Sorry :( "
+            return res.status(404).send({
+              message: "No listing with such id exist!"
         });
-    })
+    }}).catch((err) => {
+        return res.status(500).send({
+            message: "Could not fetch book listings. Sorry :( "
+        });
+    });
 });
 
 route.post('/add', upload.single('bookImage'), (req,res, next) => {
@@ -205,7 +208,7 @@ route.post('/add', upload.single('bookImage'), (req,res, next) => {
    }).catch((err) => {
        console.log(err);
        res.status(500).send({
-           error: "Could not create new listing. Sorry :("
+           message: "Could not create new listing. Sorry :("
        })
    })
 });
@@ -213,7 +216,9 @@ route.post('/add', upload.single('bookImage'), (req,res, next) => {
 route.get('/delete/:id', (req,res) => {
 
     if(!req.session.user){
-        return res.status(401).send("Please login to delete listing.");
+        return res.status(401).send({
+          message: "Please login to delete listing."
+        })
     }
 
     Listing.find({
@@ -227,12 +232,18 @@ route.get('/delete/:id', (req,res) => {
                     id: req.params.id
                 }
             });
-            return res.status(200).send("Listing removed successfully!");
+            return res.status(200).send({
+                message: "Listing removed successfully!"
+            });
         }else{
-            return res.status(403).send("Only seller can delete a listing");
+            return res.status(403).send({
+                message: "Only seller can delete a listing"
+            });
         }
     }).catch((err) => {
-        return res.status(500).send("Listing can't be deleted!");
+        return res.status(500).send({
+          message: "Listing can't be deleted!"
+        });
     })
 
 });

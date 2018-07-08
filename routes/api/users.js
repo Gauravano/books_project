@@ -6,7 +6,9 @@ console.log("current session", req.session.user);
     if (req.session.user == undefined){
         res.status(200).send("Ok");
     }else {
-        res.status(400).send("Logout from the current session first. Thank you.");
+        res.status(400).send({
+          message: "Logout from the current session first. Thank you."
+        });
     }
 });
 
@@ -15,7 +17,9 @@ console.log("current session", req.session.user);
     if (req.session.user == undefined){
         res.status(200).send("OK");
     }else {
-        res.status(400).send("Logout from the current session first. Thank you.");
+        res.status(400).send({
+          message: "Logout from the current session first. Thank you."
+        });
     }
 });
 
@@ -29,10 +33,14 @@ route.get('/:id', (req,res) => {
     if(user){
       return res.status(200).send(user);
     }else{
-      return res.status(400).send("No user with this Id found!");
+      return res.status(400).send({
+        message: "No user with this Id found!"
+    });
     }
   }).catch((err) => {
-    return res.status(500).send("Can't fetch at current time!");
+    return res.status(500).send({
+      message: "Can't fetch at current time!"
+  });
   })
 });
 
@@ -41,7 +49,9 @@ route.post('/signup', (req, res) => {
    console.log("Signup Request: ",req.body);
 
     if (req.session.user != undefined ){
-        return res.status(400).send("Logout from the current session first. Thank you.");
+        return res.status(400).send({
+          message: "Logout from the current session first. Thank you."
+        });
     }
 
     User.find({
@@ -50,7 +60,9 @@ route.post('/signup', (req, res) => {
       }
     }).then((user) => {
       if(user){
-        return res.status(406).send("User with this email id already exist! ");
+        return res.status(406).send({
+          message: "User with this email id already exist! "
+      });
       }
     })
 
@@ -77,7 +89,9 @@ route.post('/login', (req, res) => {
     console.log("Login Request: ",req.body);
 
     if (req.session.user != undefined){
-        return res.status(400).send("Logout from the current session first. Thank you.");
+        return res.status(400).send({
+          message: "Logout from the current session first. Thank you."
+      });
     }
 
     User.find({
