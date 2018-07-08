@@ -79,83 +79,26 @@ route.get('/user', (req, res) => {
 
 
 route.get('/filter', (req, res) => {
-//
-//   var options1 = {
-//   where: {
-//     $or: [
-//       { 'book_name': { like: '%' + req.query.book_name + '%' } },
-//       { 'author_name': { like: '%' + req.query.book_name + '%' } }
-//     ],
-//     $and: [
-//       { 'condition': req.query.condition },
-//       { 'price': {between: [0, req.query.price]}}
-//     ]
-//   }
-// }
-//
-// var options4 = {
-// where: {
-//   $and: [
-//     { 'condition': req.query.condition },
-//     { 'price': {between: [0, req.query.price]}}
-//   ]
-// }
-// }
-//
-//   var options2 = {
-//   where: {
-//     $or: [
-//       { 'book_name': { like: '%' + req.query.book_name + '%' } },
-//       { 'author_name': { like: '%' + req.query.book_name + '%' } },
-//       { 'condition': req.query.condition },
-//       { 'price': {between: [0, req.query.price]}}
-//     ]
-//
-//   }
-// }
-
-//   var options3 = {
-//   where: {
-//     $and: [
-//       { 'book_name': { like: '%' + req.query.book_name + '%' } },
-//       { 'author_name': { like: '%' + req.query.book_name + '%' } },
-//       { 'condition': req.query.condition },
-//       { 'price': {between: [0, req.query.price]}}
-//     ]
-//
-//   }
-// };
-
 
 conditions = [];
 
-if(req.query.author_name != ''){
+console.log('Author name: ',req.query.author_name, req.query.price);
+
+if(req.query.author_name != undefined){
     conditions.push({ 'author_name': { like: '%' + req.query.author_name + '%' } });
 }
 
-if(req.query.book_name != ''){
+if(req.query.book_name != undefined){
     conditions.push({ 'book_name': { like: '%' + req.query.book_name + '%' } });
 }
-if(req.query.condition != ''){
+if(req.query.condition != undefined){
     conditions.push({ 'condition': req.query.condition });
 }
-if(req.query.price != ''){
+if(req.query.price != undefined){
     conditions.push({ 'book_name': { like: '%' + req.query.book_name + '%' } });
 }
 
 console.log('conditions');
-  //
-  // if(req.query.author_name != '' && req.query.book_name != '' && req.query.condition != '' && req.query.price != '') {
-  //   options = options3;
-  // } else if (req.query.author_name == '' && req.query.book_name == '' && req.query.condition != '' && req.query.price != ''){
-  //   options = options3;
-  // }else if (((req.query.author_name == '' && req.query.book_name != '') || (req.query.author_name != '' && req.query.book_name == '')) && req.query.condition != '' && req.query.price != ''){
-  //   options = options3;
-  // }else {
-  //     options = options3;
-  // }
-  //
-  // console.log(options);
 
   var options = {
   where: {
