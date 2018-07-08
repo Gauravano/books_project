@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize(env('DB_DATABASE', 'heroku_7697999bfbc1608'), env('DB_USERNAME', 'b5f842e84e26ba'), env('DB_PASSWORD','b5ad92e4' ), {
-    host: env('DB_HOST', 'us-cdbr-iron-east-04.cleardb.net'),
+const db = new Sequelize('heroku_7697999bfbc1608', 'b5f842e84e26ba','b5ad92e4'), {
+    host: 'us-cdbr-iron-east-04.cleardb.net',
     dialect: 'mysql',
     pool:{
         min: 0,
