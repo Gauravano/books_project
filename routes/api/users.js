@@ -137,31 +137,4 @@ route.post('/logout', (req, res) => {
     }
 });
 
-// route.get('/dashboard', function (req, res) {
-//     if(!req.session.user){
-//         return res.status(401).send();
-//     }else{
-//         console.log("Current user", req.session.user);
-//         return res.status(200).send("Welcome");
-//     }
-// });
-//
-// route.get('/:id', (req,res) => {
-//
-//   User.find({
-//     where: {
-//       id: req.params.id
-//     }
-//   }).then((user) => {
-//     if(user){
-//       return res.status(200).send(user);
-//     }else{
-//       return res.status(400).send("No user with this Id found!");
-//     }
-//   }).catch((err) => {
-//     return res.status(500).send("Can't fetch at current time!");
-//   })
-//
-// });
-
 exports = module.exports = route;

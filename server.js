@@ -21,6 +21,10 @@ app.use('/wishlist',express.static('public'));
 app.use('/signup',express.static('public'));
 app.use('/login',express.static('public'));
 app.use('/dashboard',express.static('public'));
+app.all('*',(req, res) => {
+  res.redirect('/');
+})
+
 
 app.listen(app.get('port'), function () {
    console.log("Node app is running at Port: ", app.get('port'));

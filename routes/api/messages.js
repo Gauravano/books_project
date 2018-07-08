@@ -45,40 +45,6 @@ route.get('/:id', (req,res) => {
         });
     });
 
-  //   Listing.find({
-  //     where: {
-  //       listingId: req.params.id
-  //     }
-  //   }).then((item) => {
-  //     if(req.session.user.id != item.userId) {
-  //         isSeller = false;
-  //     }else {
-  //         isSeller = true;
-  //     }
-  //   })
-  //
-  //   if(isSeller){
-  //     Message.findAll({
-  //         where: {
-  //             listingId: req.params.id
-  //         }
-  //     }).then((messages) => {
-  //         res.status(200).send(messages);
-  //     }).catch((err) => {
-  //         message: "Can't fetch messages!"
-  //     })
-  // } else {
-  //   Message.findAll({
-  //       where: {
-  //           listingId: req.params.id,
-  //           senderId: req.session.user.id
-  //       }
-  //   }).then((messages) => {
-  //       res.status(200).send(messages);
-  //   }).catch((err) => {
-  //       message: "Can't fetch messages!"
-  //   })
-  // }
 });
 
 route.post('/create', (req,res) => {

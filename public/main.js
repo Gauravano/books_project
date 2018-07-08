@@ -66,7 +66,7 @@ var routes = [
     { path: 'listings/:id', component: _listing_listing_component__WEBPACK_IMPORTED_MODULE_6__["ListingComponent"] },
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'messages', component: _message_message_component__WEBPACK_IMPORTED_MODULE_8__["MessageComponent"] },
-    { path: '**', redirectTo: '/dashboard' }
+    { path: '**', redirectTo: '/' }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -148,6 +148,7 @@ var AppComponent = /** @class */ (function () {
         this.current_user = localStorage.getItem('userObject');
     }
     AppComponent.prototype.ngOnInit = function () {
+        console.log('App compo called');
         var retrievedObject = localStorage.getItem('userObject');
         console.log('retrievedObject: ', JSON.parse(retrievedObject));
         this.current_user = retrievedObject;
@@ -159,6 +160,7 @@ var AppComponent = /** @class */ (function () {
             localStorage.removeItem('userObject');
             _this.toastr.success('Successfully logged out');
             _this.router.navigate(['/dashboard']);
+            window.location.reload();
         }, function (err) {
             console.log(err.error);
         });
@@ -172,7 +174,8 @@ var AppComponent = /** @class */ (function () {
                 _this.router.navigate(['/login']);
             }
             else {
-                console.log(err.error);
+                console.log(err);
+                _this.toastr.warning(err.error.message);
             }
         });
     };
@@ -185,7 +188,8 @@ var AppComponent = /** @class */ (function () {
                 _this.router.navigate(['/signup']);
             }
             else {
-                console.log(err.error);
+                console.log(err);
+                _this.toastr.warning(err.error.message);
             }
         });
     };
@@ -368,7 +372,7 @@ var AuthenticationService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#prodCardImage:hover{\n  transition: -webkit-transform .2s;\n  transition: transform .2s;\n  transition: transform .2s, -webkit-transform .2s;\n  -webkit-transform: scale(2.0);\n          transform: scale(2.0);\n}\n"
+module.exports = "#prodCardImage:hover{\n  transition: -webkit-transform .2s;\n  transition: transform .2s;\n  transition: transform .2s, -webkit-transform .2s;\n  -webkit-transform: scale(2.0);\n          transform: scale(2.0);\n}\n\n.fa-heart{\n  transition: -webkit-transform .2s;\n  transition: transform .2s;\n  transition: transform .2s, -webkit-transform .2s;\n  -webkit-transform: scale(1.5);\n          transform: scale(1.5);\n}\n"
 
 /***/ }),
 
@@ -379,7 +383,7 @@ module.exports = "#prodCardImage:hover{\n  transition: -webkit-transform .2s;\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\n<div class=\"row pt-4\">\n\n  <!-- Sidebar -->\n  <div class=\"col-lg-3\">\n    <form class=\"form\" [formGroup]=\"filterForm\" (ngSubmit)=\"submitFilterForm(filterForm.value)\">\n\n    <div class=\"\">\n      <!-- Grid row -->\n      <div class=\"row\">\n\n        <div class=\"col-md-6 col-lg-12 mb-5\">\n          <!-- Panel -->\n          <h5 class=\"font-weight-bold dark-grey-text\"><strong>Search</strong></h5>\n          <div class=\"divider\"></div>\n\n\n            <div class=\"md-form form-group\">\n              <!--<i class=\"fa fa-envelope prefix\"></i>-->\n              <input mdbInputDirective type=\"text\" class=\"form-control\" id=\"form9\" formControlName=\"book_name\">\n              <label for=\"form9\">Search by book name</label>\n            </div>\n\n            <div class=\"md-form form-group\">\n              <!--<i class=\"fa fa-lock prefix\"></i>-->\n              <input mdbInputDirective type=\"text\" class=\"form-control\" id=\"form10\" formControlName=\"author_name\">\n              <label for=\"form10\">Search by author</label>\n            </div>\n\n        </div>\n\n        <!-- Filter by category-->\n        <div class=\"col-md-6 col-lg-12 mb-5\">\n          <h5 class=\"font-weight-bold dark-grey-text\"><strong>Condition</strong></h5>\n          <div class=\"divider\"></div>\n\n          <mat-radio-group formControlName=\"condition\" class=\"example-radio-group\">\n            <mat-radio-button class=\"example-radio-button\" value=\"All\">All</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"New\">New</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"Almost new\">Almost new</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"Slightly damage\">Slightly damage</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"Worn\">Worn</mat-radio-button>\n          </mat-radio-group>\n        </div>\n        <!-- /Filter by category-->\n\n      </div>\n      <!-- /Grid row -->\n\n      <!-- Grid row -->\n      <div class=\"row\">\n\n        <!-- Filter by price  -->\n        <div class=\"col-md-6 col-lg-12 mb-5\">\n          <h5 class=\"font-weight-bold dark-grey-text\"><strong>Price</strong></h5>\n\n          <div class=\"range-field mt-3\">\n            <!--<input mdbInputDirective formControlName=\"price\" id=\"calculatorSlider\" class=\"no-border\" type=\"range\" value=\"0\" min=\"0\" max=\"10000\">-->\n            <mat-slider style=\"width: 200px;\" formControlName=\"price\"\n              thumbLabel min=\"1\" max=\"10000\"></mat-slider>\n          </div>\n\n          <!-- Grid row -->\n          <div class=\"row justify-content-center\">\n\n            <!-- Grid column -->\n            <div class=\"col-md-6 text-left\">\n              <p class=\"dark-grey-text\"><strong id=\"resellerEarnings\">0$</strong></p>\n            </div>\n            <!-- Grid column -->\n\n            <!-- Grid column -->\n            <div class=\"col-md-6 text-right\">\n              <p class=\"dark-grey-text\"><strong id=\"clientPrice\">319$</strong></p>\n            </div>\n            <!-- Grid column -->\n          </div>\n          <!-- Grid row -->\n\n        </div>\n        <!-- /Filter by price -->\n\n        </div>\n      <!-- /Grid row -->\n    </div>\n  </form>\n  </div>\n  <!-- /.Sidebar -->\n\n  <!-- Content -->\n  <div class=\"col-lg-9\">\n\n    <!-- Products Grid -->\n    <section class=\"section pt-4\">\n\n      <!-- Grid row -->\n      <div class=\"row\">\n\n        <!--Grid column-->\n        <div class=\"col-lg-4 col-md-12 mb-4\" *ngFor=\"let listing of listings;\">\n\n          <div routerLink=\"/listings/{{listing.id}}\" id=\"mainCard\" class=\"card card-cascade narrower card-ecommerce\">\n            <!--Card image-->\n            <div routerLink=\"/listings/{{listing.id}}\" class=\"view view-cascade overlay waves-light\" mdbWavesEffect>\n              <img id=\"prodCardImage\" style=\" width:100%; height: 200px;\" src=\"{{listing.book_image_url}}\" class=\"img-fluid\" alt=\"sample photo\">\n              <a>\n                <div class=\"mask rgba-brown-slight\"></div>\n              </a>\n            </div>\n            <!--Card image-->\n            <!--Card content-->\n            <div class=\"card-body card-body-cascade text-center\">\n              <!--Category & Title-->\n              <a href=\"\" class=\"grey-text\">\n                <h5>{{listing.author_name}}</h5>\n              </a>\n              <h4 class=\"card-title\">\n                <strong>\n                  <a routerLink=\"/listings/{{listing.id}}\">{{listing.book_name}}</a>\n                </strong>\n              </h4>\n\n              <div  class=\"row justify-content-center\">\n                <h4 style=\"color: red;\">&#8377; {{listing.price}}</h4>\n              </div>\n\n              <div class=\"row justify-content-center\">\n                <span class=\"card-text\"><i>by {{listing.user_name}}</i></span>\n              </div>\n              <!--Card footer-->\n              <div class=\"card-footer\">\n                  <span class=\"float-left font-weight-bold\">\n                    <h6><span class=\"badge badge-default\">{{listing.condition}}</span></h6>\n                  </span>\n                <span class=\"float-right\">\n                  <span *ngIf=\"current_user!=null\">\n                  <a class=\"active\" (click)=\"addWishlist(listing.id)\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Added to Wishlist\">\n                      <i style=\"\" class=\"fa fa-heart ml-3\"></i>\n                    </a>\n                  </span>\n                  </span>\n              </div>\n            </div>\n            <!--Card content-->\n          </div>\n          <!--Card-->\n\n        </div>\n        <!--Grid column-->\n\n\n      </div>\n      <!--Grid row-->\n\n      <!--Grid row-->\n    </section>\n    <!-- /.Products Grid -->\n\n  </div>\n  <!-- /.Content -->\n\n</div>\n\n</div>\n"
+module.exports = "<div class=\"container\">\n\n<div class=\"row pt-4\">\n\n  <!-- Sidebar -->\n  <div class=\"col-lg-3\">\n    <form class=\"form\" [formGroup]=\"filterForm\" (ngSubmit)=\"submitFilterForm(filterForm.value)\">\n\n    <div class=\"\">\n      <!-- Grid row -->\n      <div class=\"row\">\n\n        <div class=\"col-md-6 col-lg-12 mb-5\">\n          <!-- Panel -->\n          <h5 class=\"font-weight-bold dark-grey-text\"><strong>Search</strong></h5>\n          <div class=\"divider\"></div>\n\n\n            <div class=\"md-form form-group\">\n              <!--<i class=\"fa fa-envelope prefix\"></i>-->\n              <input mdbInputDirective type=\"text\" class=\"form-control\" id=\"form9\" formControlName=\"book_name\">\n              <label for=\"form9\">Search by book name</label>\n            </div>\n\n            <div class=\"md-form form-group\">\n              <!--<i class=\"fa fa-lock prefix\"></i>-->\n              <input mdbInputDirective type=\"text\" class=\"form-control\" id=\"form10\" formControlName=\"author_name\">\n              <label for=\"form10\">Search by author</label>\n            </div>\n\n        </div>\n\n        <!-- Filter by category-->\n        <div class=\"col-md-6 col-lg-12 mb-5\">\n          <h5 class=\"font-weight-bold dark-grey-text\"><strong>Condition</strong></h5>\n          <div class=\"divider\"></div>\n\n          <mat-radio-group formControlName=\"condition\" class=\"example-radio-group\">\n            <mat-radio-button class=\"example-radio-button\" value=\"All\">All</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"New\">New</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"Almost new\">Almost new</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"Slightly damage\">Slightly damage</mat-radio-button><br>\n            <mat-radio-button class=\"example-radio-button\" value=\"Worn\">Worn</mat-radio-button>\n          </mat-radio-group>\n        </div>\n        <!-- /Filter by category-->\n\n      </div>\n      <!-- /Grid row -->\n\n      <!-- Grid row -->\n      <div class=\"row\">\n\n        <!-- Filter by price  -->\n        <div class=\"col-md-6 col-lg-12 mb-5\">\n          <h5 class=\"font-weight-bold dark-grey-text\"><strong>Price</strong></h5>\n\n          <div class=\"range-field mt-3\">\n            <!--<input mdbInputDirective formControlName=\"price\" id=\"calculatorSlider\" class=\"no-border\" type=\"range\" value=\"0\" min=\"0\" max=\"10000\">-->\n            <mat-slider style=\"width: 200px;\" formControlName=\"price\"\n              thumbLabel min=\"1\" max=\"10000\"></mat-slider>\n          </div>\n\n        </div>\n        <!-- /Filter by price -->\n\n        </div>\n      <!-- /Grid row -->\n    </div>\n  </form>\n  </div>\n  <!-- /.Sidebar -->\n\n  <!-- Content -->\n  <div class=\"col-lg-9\">\n\n    <!-- Products Grid -->\n    <section class=\"section pt-4\">\n\n      <!-- Grid row -->\n      <div class=\"row\">\n\n        <!--Grid column-->\n        <div class=\"col-lg-4 col-md-12 mb-4\" *ngFor=\"let listing of listings;\">\n\n          <div id=\"mainCard\" class=\"card card-cascade narrower card-ecommerce\">\n            <!--Card image-->\n            <div routerLink=\"/listings/{{listing.id}}\" class=\"view view-cascade overlay waves-light\" mdbWavesEffect>\n              <img id=\"prodCardImage\" style=\" width:100%; height: 200px;\" src=\"{{listing.book_image_url}}\" class=\"img-fluid\" alt=\"sample photo\">\n              <a>\n                <div class=\"mask rgba-brown-slight\"></div>\n              </a>\n            </div>\n            <!--Card image-->\n            <!--Card content-->\n            <div class=\"card-body card-body-cascade text-center\">\n              <!--Category & Title-->\n              <a href=\"\" class=\"grey-text\">\n                <h5>{{listing.author_name}}</h5>\n              </a>\n              <h4 class=\"card-title\">\n                <strong>\n                  <a routerLink=\"/listings/{{listing.id}}\">{{listing.book_name}}</a>\n                </strong>\n              </h4>\n\n              <div  class=\"row justify-content-center\">\n                <h4 style=\"color: red;\">&#8377; {{listing.price}}</h4>\n              </div>\n\n              <div class=\"row justify-content-center\">\n                <span class=\"card-text\"><i>by {{listing.user_name}}</i></span>\n              </div>\n              <!--Card footer-->\n              <div class=\"card-footer\">\n                  <span class=\"float-left font-weight-bold\">\n                    <h6><span class=\"badge badge-default\">{{listing.condition}}</span></h6>\n                  </span>\n                <span class=\"float-right\">\n                  <span *ngIf=\"(current_user!=null && checkInWishlist(listing.id)==true);\">\n                    <a id=\"wishlistChanger\" (click)=\"changeWishlist(listing.id, $event)\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Already in Wishlist\">\n                      <i style=\"color: red;\" class=\"fa fa-heart ml-3\"></i>\n                    </a>\n                  </span>\n                  <span *ngIf=\"(current_user!=null && checkInWishlist(listing.id) == false);\">\n                    <a id=\"wishlistChanger\" (click)=\"changeWishlist(listing.id, $event)\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Add to Wishlist\">\n                      <i class=\"fa fa-heart ml-3\"></i>\n                    </a>\n                  </span>\n                  </span>\n              </div>\n            </div>\n            <!--Card content-->\n          </div>\n          <!--Card-->\n\n        </div>\n        <!--Grid column-->\n\n\n      </div>\n      <!--Grid row-->\n\n      <!--Grid row-->\n    </section>\n    <!-- /.Products Grid -->\n\n  </div>\n  <!-- /.Content -->\n\n</div>\n\n</div>\n"
 
 /***/ }),
 
@@ -398,6 +402,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _wishlist_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../wishlist.service */ "./src/app/wishlist.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -412,15 +417,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(listingService, router, wishlistService, fb) {
+    function DashboardComponent(listingService, router, wishlistService, fb, toastr) {
         var _this = this;
         this.listingService = listingService;
         this.router = router;
         this.wishlistService = wishlistService;
         this.fb = fb;
+        this.toastr = toastr;
         this.listings = [];
         this.current_user = localStorage.getItem('userObject');
+        this.wishlist = [];
         this.filterForm = fb.group({
             price: [''],
             author_name: [''],
@@ -437,9 +445,14 @@ var DashboardComponent = /** @class */ (function () {
             console.log(listings);
             _this.listings = listings;
         });
-    };
-    DashboardComponent.prototype.ngOnChanges = function (changes) {
-        console.log(changes.filterForm);
+        this.current_user = localStorage.getItem('userObject');
+        if (this.current_user != null) {
+            this.wishlistService.getWishlist().subscribe(function (data) {
+                _this.wishlist = data;
+            }, function (err) {
+                console.log(err);
+            });
+        }
     };
     DashboardComponent.prototype.submitFilterForm = function (data) {
         var _this = this;
@@ -457,11 +470,49 @@ var DashboardComponent = /** @class */ (function () {
         console.log('Show listing init: ', id);
         this.router.navigate(["/listings/" + id]);
     };
-    DashboardComponent.prototype.addWishlist = function (id) {
-        this.wishlistService.addWishlistItem(id).subscribe(function (data) {
-            console.log('wishList item', data);
+    DashboardComponent.prototype.changeWishlist = function (id, event) {
+        var _this = this;
+        this.wishlistService.getWishlist().subscribe(function (data) {
+            _this.wishlist = data;
         }, function (err) {
             console.log(err);
+        });
+        console.log('event', event.path[1]);
+        console.log('status check', this.checkInWishlist(id));
+        if (this.checkInWishlist(id) === true) {
+            this.removeFromWishlist(id);
+            event.path[1].title = 'Add to wishlist';
+            event.path[0].style.color = 'none';
+        }
+        else {
+            this.wishlistService.addWishlistItem(id).subscribe(function (data) {
+                console.log('wishList item', data);
+                event.path[1].title = 'Already in wishlist';
+                event.path[0].style.color = 'red';
+                _this.toastr.success('Item added to the wishlist');
+            }, function (err) {
+                console.log(err);
+                _this.toastr.error(err.error.message);
+            });
+        }
+    };
+    DashboardComponent.prototype.checkInWishlist = function (id) {
+        for (var _i = 0, _a = this.wishlist; _i < _a.length; _i++) {
+            var i = _a[_i];
+            if (i.id === id) {
+                return true;
+            }
+        }
+        return false;
+    };
+    DashboardComponent.prototype.removeFromWishlist = function (id) {
+        var _this = this;
+        this.wishlistService.deleteWishlistItem(id).subscribe(function (item) {
+            console.log('removed', item);
+            _this.toastr.success('Listing removed from your wishlist');
+        }, function (err) {
+            console.log(err);
+            _this.toastr.error(err.error.message);
         });
     };
     DashboardComponent = __decorate([
@@ -472,7 +523,8 @@ var DashboardComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_listing_service__WEBPACK_IMPORTED_MODULE_1__["ListingService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
-            _wishlist_service__WEBPACK_IMPORTED_MODULE_3__["WishlistService"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]])
+            _wishlist_service__WEBPACK_IMPORTED_MODULE_3__["WishlistService"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -561,9 +613,6 @@ var ListingService = /** @class */ (function () {
     ListingService.prototype.getListItems = function () {
         return this.http.get('api/listings/user');
     };
-    ListingService.prototype.deleteWishlistItem = function (id) {
-        return this.http.get("api/listings/delete/" + id);
-    };
     ListingService.prototype.getFilteredList = function (data) {
         return this.http.get('api/listings/filter', {
             params: {
@@ -605,7 +654,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"container\"> <div class=\"col-3 card mx-4 p-4\" style=\"box-shadow:2px; margin-bottom:30px;\">-->\n<!--<img src='http://localhost:4000/{{listing.book_image_url}}' width=\"300px\" height=\"100px\">-->\n<!--<h4 class=\"product-name\"><b>{{listing.book_name}}</b></h4>-->\n<!--<div class=\"product-manufacturer\">{{listing.author_name}}</div>-->\n<!--<div class=\"row\">-->\n<!--<div class=\"col m-3 p-2\">100px-->\n<!--<b>&#8377; {{listing.price}}</b>-->\n<!--</div>-->\n<!--</div>-->\n<!--<div class=\"row\">-->\n<!--<button class=\"col btn btn-primary m-3\" (click)=\"addWishlist(listing.id)\">Add to Wishlist</button>-->\n<!--</div>-->\n<!--</div>-->\n\n<!--<div><h4 id=\"trial\" style=\"text-align: center;\">Contact the Seller</h4></div>-->\n<!--<hr id=\"point\" style=\"margin-bottom: 40px;\">-->\n<!--<div class=\"container\">-->\n<!--<form #contactSellerForm=\"ngForm\" id=\"contactForm\" (ngSubmit)=\"sendMessage(contactSellerForm.value)\">-->\n<!--<div class=\"form-group\">-->\n<!--<input name=\"message\" type=\"text\" class=\"form-control\" id=\"message\" required ngModel>-->\n<!--</div>-->\n\n<!--<button type=\"submit\" class=\"btn btn-success\">Send</button>-->\n\n<!--</form>-->\n<!--</div>-->\n<!--</div>-->\n<!--<button class=\"btn btn-success\" (click)=\"getMessages()\">Message</button>-->\n\n<div class=\"container\">\n\n  <section id=\"productDetails\" class=\"pb-5\">\n\n    <!--News card-->\n    <div class=\"card mt-5 hoverable\">\n      <div class=\"row mt-5\">\n        <div class=\"col-lg-6\">\n          <div class=\"row mx-2\">\n            <!--Carousel Wrapper-->\n            <div id=\"carousel-thumb\" class=\"carousel slide carousel-fade carousel-thumbnails mb-5 pb-4\" data-ride=\"carousel\">\n\n              <!--Slides-->\n              <div class=\"carousel-inner text-center text-md-left\" role=\"listbox\">\n                <div class=\"carousel-item active\">\n                  <img src=\"https://bookish-v1.herokuapp.com/{{listing.book_image_url}}\" alt=\"First slide\" class=\"img-fluid\">\n                </div>\n              </div>\n              <!--/.Slides-->\n\n            </div>\n            <!--/.Carousel Wrapper-->\n          </div>\n          <!--Grid row-->\n        </div>\n        <div class=\"col-lg-5 mr-3 text-center text-md-left\">\n          <h2 class=\"h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4\">\n            <strong>{{listing.book_name}} </strong>\n          </h2>\n          <span class=\"badge badge-danger product mb-4 ml-xl-0 ml-4\">{{listing.condition}}</span>\n\n\n          <span class=\"badge badge-success product mb-4 ml-2\">SALE</span>\n          <h3 class=\"h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4\">\n                            <span class=\"red-text font-weight-bold\">\n                                <strong>&#8377; {{listing.price}}</strong>\n                            </span>\n          </h3>\n\n          <p class=\"ml-xl-0 ml-4\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente nesciunt atque nemo neque ut officiis\n            nostrum incidunt maiores, magni optio et sunt suscipit iusto nisi totam quis, nobis mollitia\n            necessitatibus.\n          </p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Author: </strong>{{listing.author_name}}</p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Seller: </strong>{{listing.user_name}}</p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Condition: </strong>{{listing.condition}}</p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Availability: </strong>In stock</p>\n\n          <!-- Add to Cart -->\n          <section class=\"color\">\n            <div class=\"mt-5\">\n\n              <div class=\"row mt-3 mb-4\">\n                <div class=\"col-md-12 text-center text-md-left text-md-right\">\n                  <button class=\"btn btn-primary btn-rounded waves-effect waves-light\" (click)=\"addWishlist(listing.id)\">\n                    <i class=\"fa fa-heart mr-2\" aria-hidden=\"true\"></i> Add to wishlist</button>\n                </div>\n              </div>\n            </div>\n          </section>\n          <!-- /.Add to Cart -->\n        </div>\n      </div>\n    </div>\n    <!--News card-->\n\n  </section>\n\n  <div *ngIf=\"showMessage;\">\n    <div class=\"divider-new\">\n      <h3 class=\"h3-responsive font-weight-bold blue-text mx-3\">Your recent messages with {{listing.user_name}} <small>(Seller)</small></h3>\n    </div>\n\n    <div class=\"row\" *ngFor=\"let message of conversation;\" id=\"messages\">\n      <div style=\"width: 400px; border-radius: 25px; border-top-left-radius: 0px; background-color: lightgoldenrodyellow; padding: 10px; margin-bottom: 10px\" >{{message.content}}</div>\n    </div>\n\n  </div>\n\n  <div id=\"point\" *ngIf=\"current_user; else no_user;\">\n    <section>\n      <div class=\"reply-form\">\n        <h2 class=\"h2 section-heading text-center\">Leave a message for Seller</h2>\n        <br>\n\n        <div class=\"row\">\n          <!--&lt;!&ndash;Image column&ndash;&gt;-->\n          <!--<div class=\"col-sm-2 col-12\">-->\n          <!--<img src=\"https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg\" class=\"avatar rounded-circle z-depth-1-half\">-->\n          <!--</div>-->\n          <!--&lt;!&ndash;/.Image column&ndash;&gt;-->\n\n          <div class=\"col-sm-10 col-12\">\n            <div class=\"md-form\">\n              <form #contactSellerForm=\"ngForm\" id=\"contactForm\" (ngSubmit)=\"sendMessage(contactSellerForm.value)\">\n                <textarea type=\"text\" name=\"message\" id=\"message\" class=\"md-textarea form-control\" required ngModel></textarea>\n\n              <label for=\"message\">Your message</label>\n              <div class=\"text-center mx-auto\">\n                <button type=\"submit\" class=\"btn btn-primary waves-light\" mdbWavesEffect>Send <i class=\"fa fa-send-o ml-2\"></i></button>\n              </div>\n              </form>\n            </div>\n          </div>\n\n        </div>\n      </div>\n\n    </section>\n  </div>\n  <ng-template #no_user>\n    <div class=\"divider-new\">\n      <h3 class=\"h3-responsive font-weight-bold black-text mx-3\">Leave a message for seller by signing in...</h3>\n    </div>\n    <div class=\"row justify-content-md-center\">\n      <button type=\"button\" class=\"btn btn-info waves-effect waves-light\" routerLink=\"/login\">Log In <i class=\"fa fa-sign-in ml-2\"></i></button>\n      <button type=\"button\" class=\"btn btn-info waves-effect waves-light\" routerLink=\"/signup\">Sign Up</button>\n    </div>\n  </ng-template>\n\n</div>\n\n\n"
+module.exports = "<!--<div class=\"container\"> <div class=\"col-3 card mx-4 p-4\" style=\"box-shadow:2px; margin-bottom:30px;\">-->\n<!--<img src='http://localhost:4000/{{listing.book_image_url}}' width=\"300px\" height=\"100px\">-->\n<!--<h4 class=\"product-name\"><b>{{listing.book_name}}</b></h4>-->\n<!--<div class=\"product-manufacturer\">{{listing.author_name}}</div>-->\n<!--<div class=\"row\">-->\n<!--<div class=\"col m-3 p-2\">100px-->\n<!--<b>&#8377; {{listing.price}}</b>-->\n<!--</div>-->\n<!--</div>-->\n<!--<div class=\"row\">-->\n<!--<button class=\"col btn btn-primary m-3\" (click)=\"addWishlist(listing.id)\">Add to Wishlist</button>-->\n<!--</div>-->\n<!--</div>-->\n\n<!--<div><h4 id=\"trial\" style=\"text-align: center;\">Contact the Seller</h4></div>-->\n<!--<hr id=\"point\" style=\"margin-bottom: 40px;\">-->\n<!--<div class=\"container\">-->\n<!--<form #contactSellerForm=\"ngForm\" id=\"contactForm\" (ngSubmit)=\"sendMessage(contactSellerForm.value)\">-->\n<!--<div class=\"form-group\">-->\n<!--<input name=\"message\" type=\"text\" class=\"form-control\" id=\"message\" required ngModel>-->\n<!--</div>-->\n\n<!--<button type=\"submit\" class=\"btn btn-success\">Send</button>-->\n\n<!--</form>-->\n<!--</div>-->\n<!--</div>-->\n<!--<button class=\"btn btn-success\" (click)=\"getMessages()\">Message</button>-->\n\n<div class=\"container\">\n\n  <section id=\"productDetails\" class=\"pb-5\">\n\n    <!--News card-->\n    <div class=\"card mt-5 hoverable\">\n      <div class=\"row mt-5\">\n        <div class=\"col-lg-6\">\n          <div class=\"row mx-2\">\n            <!--Carousel Wrapper-->\n            <div id=\"carousel-thumb\" class=\"carousel slide carousel-fade carousel-thumbnails mb-5 pb-4\" data-ride=\"carousel\">\n\n              <!--Slides-->\n              <div class=\"carousel-inner text-center text-md-left\" role=\"listbox\">\n                <div class=\"carousel-item active\">\n                  <img src=\"{{listing.book_image_url}}\" alt=\"First slide\" class=\"img-fluid\">\n                </div>\n              </div>\n              <!--/.Slides-->\n\n            </div>\n            <!--/.Carousel Wrapper-->\n          </div>\n          <!--Grid row-->\n        </div>\n        <div class=\"col-lg-5 mr-3 text-center text-md-left\">\n          <h2 class=\"h2-responsive text-center text-md-left product-name font-weight-bold dark-grey-text mb-1 ml-xl-0 ml-4\">\n            <strong>{{listing.book_name}} </strong>\n          </h2>\n          <span class=\"badge badge-danger product mb-4 ml-xl-0 ml-4\">{{listing.condition}}</span>\n\n\n          <span class=\"badge badge-success product mb-4 ml-2\">SALE</span>\n          <h3 class=\"h3-responsive text-center text-md-left mb-5 ml-xl-0 ml-4\">\n                            <span class=\"red-text font-weight-bold\">\n                                <strong>&#8377; {{listing.price}}</strong>\n                            </span>\n          </h3>\n\n          <p class=\"ml-xl-0 ml-4\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente nesciunt atque nemo neque ut officiis\n            nostrum incidunt maiores, magni optio et sunt suscipit iusto nisi totam quis, nobis mollitia\n            necessitatibus.\n          </p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Author: </strong>{{listing.author_name}}</p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Seller: </strong>{{listing.user_name}}</p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Condition: </strong>{{listing.condition}}</p>\n          <p class=\"ml-xl-0 ml-4\">\n            <strong>Availability: </strong>In stock</p>\n\n          <!-- Add to Cart -->\n          <section class=\"color\">\n            <div class=\"mt-5\">\n\n              <div class=\"row mt-3 mb-4\">\n                <div class=\"col-md-12 text-center text-md-left text-md-right\">\n                  <button class=\"btn btn-primary btn-rounded waves-effect waves-light\" (click)=\"addWishlist(listing.id)\">\n                    <i class=\"fa fa-heart mr-2\" aria-hidden=\"true\"></i> Add to wishlist</button>\n                </div>\n              </div>\n            </div>\n          </section>\n          <!-- /.Add to Cart -->\n        </div>\n      </div>\n    </div>\n    <!--News card-->\n\n  </section>\n\n  <div *ngIf=\"showMessage;\">\n    <div class=\"divider-new\">\n      <h3 class=\"h3-responsive font-weight-bold blue-text mx-3\">Your recent messages with {{listing.user_name}} <small>(Seller)</small></h3>\n    </div>\n\n    <div class=\"row\" *ngFor=\"let message of conversation;\" id=\"messages\">\n      <div style=\"width: 400px; border-radius: 25px; border-top-left-radius: 0px; background-color: lightgoldenrodyellow; padding: 10px; margin-bottom: 10px\" >{{message.content}}</div>\n    </div>\n\n  </div>\n\n  <div id=\"point\" *ngIf=\"current_user; else no_user;\">\n    <section>\n      <div class=\"reply-form\">\n        <h2 class=\"h2 section-heading text-center\">Leave a message for Seller</h2>\n        <br>\n\n        <div class=\"row\">\n          <!--&lt;!&ndash;Image column&ndash;&gt;-->\n          <!--<div class=\"col-sm-2 col-12\">-->\n          <!--<img src=\"https://mdbootstrap.com/img/Photos/Avatars/avatar-6.jpg\" class=\"avatar rounded-circle z-depth-1-half\">-->\n          <!--</div>-->\n          <!--&lt;!&ndash;/.Image column&ndash;&gt;-->\n\n          <div class=\"col-sm-10 col-12\">\n            <div class=\"md-form\">\n              <form #contactSellerForm=\"ngForm\" id=\"contactForm\" (ngSubmit)=\"sendMessage(contactSellerForm.value)\">\n                <textarea type=\"text\" name=\"message\" id=\"message\" class=\"md-textarea form-control\" required ngModel></textarea>\n\n              <label for=\"message\">Your message</label>\n              <div class=\"text-center mx-auto\">\n                <button type=\"submit\" class=\"btn btn-primary waves-light\" mdbWavesEffect>Send <i class=\"fa fa-send-o ml-2\"></i></button>\n              </div>\n              </form>\n            </div>\n          </div>\n\n        </div>\n      </div>\n\n    </section>\n  </div>\n  <ng-template #no_user>\n    <div class=\"divider-new\">\n      <h3 class=\"h3-responsive font-weight-bold black-text mx-3\">Leave a message for seller by signing in...</h3>\n    </div>\n    <div class=\"row justify-content-md-center\">\n      <button type=\"button\" class=\"btn btn-info waves-effect waves-light\" routerLink=\"/login\">Log In <i class=\"fa fa-sign-in ml-2\"></i></button>\n      <button type=\"button\" class=\"btn btn-info waves-effect waves-light\" routerLink=\"/signup\">Sign Up</button>\n    </div>\n  </ng-template>\n\n</div>\n\n\n"
 
 /***/ }),
 
@@ -756,6 +805,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _globals__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../globals */ "./src/app/globals.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -770,12 +820,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent(http, globals, router, fb) {
+    function LoginComponent(http, globals, router, fb, toastr) {
         this.http = http;
         this.globals = globals;
         this.router = router;
         this.fb = fb;
+        this.toastr = toastr;
         this.loginForm = fb.group({
             email: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].email, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]],
             password: ['', _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required]
@@ -796,8 +848,13 @@ var LoginComponent = /** @class */ (function () {
             var userObj = { 'id': user.id, 'name': user.name };
             localStorage.setItem('userObject', JSON.stringify(userObj));
             _this.router.navigate(['/dashboard']);
+            _this.toastr.success("Hope you find your desired book :) ", "Welcome " + user.name + " !", {
+                timeOut: 30000
+            });
+            window.location.reload();
         }, function (err) {
             console.log(err.error);
+            _this.toastr.warning('Please enter valid Email ID and Password.', 'Invalid Credentials!');
         });
     };
     LoginComponent = __decorate([
@@ -806,7 +863,9 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.css */ "./src/app/login/login.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _globals__WEBPACK_IMPORTED_MODULE_2__["Globals"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _globals__WEBPACK_IMPORTED_MODULE_2__["Globals"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"]])
     ], LoginComponent);
     return LoginComponent;
 }());
@@ -905,7 +964,7 @@ module.exports = ".message-listing:hover{\n  background: aliceblue;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-5\" style=\"margin-right: 50px\">\n      <div class=\"divider-new\" style=\"margin-bottom: 20px;\">\n        <h3 class=\"h3-responsive font-weight-bold blue-text mx-3\">YOUR LISTINGS</h3>\n      </div>\n      <div class=\"row\">\n          <div class=\"card single-news mb-4 message-listing\" style=\"padding: 10px; height: 120px; cursor: pointer;\" (click)=\"getMessages(item.id)\" mdbTooltip=\"Click listing to view the messages!\" placement=\"right\" mdbWavesEffect *ngFor=\"let item of myListItems;\">\n\n            <div class=\"row\">\n\n              <div class=\"col-md-3\">\n\n                <!--Image-->\n                <div class=\"view overlay rounded z-depth-1 mb-4\">\n                  <img  style=\"height: 100px; width: 140px;\" class=\"img-fluid\" src=\"https://bookish-v1.herokuapp.com/{{item.book_image_url}}\" alt=\"Sample image\">\n                </div>\n\n              </div>\n\n              <div class=\"col-md-5\" style=\"margin-bottom: 10px;\">\n                <div class=\"row\"><p style=\"font-size: 18px;\" class=\"font-weight-bold dark-grey-text\">{{item.book_name}}</p></div>\n                <div class=\"row\"><p class=\"dark-grey-text\">{{item.author_name}}</p></div>\n              </div>\n              <div class=\"col\">\n                <div class=\"row\">\n                  <h5><span class=\"badge badge-success\">{{item.price}}</span></h5> &nbsp; &nbsp;\n                  <h5><span class=\"badge badge-warning\">{{item.condition}}</span></h5>\n                </div>\n                <div class=\"row\">\n\n                </div>\n              </div>\n\n            </div>\n\n          </div>\n      </div>\n    </div>\n    <div class=\"col-6\">\n\n      <section class=\"\">\n\n        <!--Main wrapper-->\n        <div class=\"comments-list\" style=\"margin-top: 40px\">\n          <div class=\"section-heading\" style=\"margin-left:35%;\">\n            <h3>Messages <span class=\"badge blue\">{{messageSets.length}}</span></h3>\n          </div>\n          <!--First row-->\n          <div class=\"row\" *ngFor=\"let message of messageSets;\">\n            <!--Content column-->\n            <div class=\"col-sm-10 col-12\">\n              <a><h3 class=\"user-name\">{{message.senderName}}</h3></a>\n              <mat-divider></mat-divider>\n              <div class=\"card-data\">\n                <ul class=\"pl-0 list-unstyled\">\n                  <li class=\"comment-date\"><i class=\"fa fa-clock-o\"></i>{{message.messages[0].createdAt.toLocaleString()}}</li>\n                </ul>\n              </div>\n              <div class=\"comment-text\">\n                <div *ngFor=\"let msg of message.messages\">\n                  {{msg.content}}\n                </div>\n              </div>\n            </div>\n            <mat-divider [inset]=\"true\"></mat-divider>\n            <!--/.Content column-->\n          </div>\n          <!--/.First row-->\n\n        </div>\n        <!--/.Main wrapper-->\n\n      </section>\n    </div>\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-5\" style=\"margin-right: 50px\">\n      <div class=\"divider-new\" style=\"margin-bottom: 20px;\">\n        <h3 class=\"h3-responsive font-weight-bold blue-text mx-3\">YOUR LISTINGS</h3>\n      </div>\n      <div class=\"row\">\n          <div class=\"card single-news mb-4 message-listing\" style=\"padding: 10px; height: 120px; cursor: pointer;\" (click)=\"getMessages(item.id)\" mdbTooltip=\"Click listing to view the messages!\" placement=\"right\" mdbWavesEffect *ngFor=\"let item of myListItems;\">\n\n            <div class=\"row\">\n\n              <div class=\"col-md-3\">\n\n                <!--Image-->\n                <div class=\"view overlay rounded z-depth-1 mb-4\">\n                  <img  style=\"height: 100px; width: 140px;\" class=\"img-fluid\" src=\"{{item.book_image_url}}\" alt=\"Sample image\">\n                </div>\n\n              </div>\n\n              <div class=\"col-md-5\" style=\"margin-bottom: 10px;\">\n                <div class=\"row\"><p style=\"font-size: 18px;\" class=\"font-weight-bold dark-grey-text\">{{item.book_name}}</p></div>\n                <div class=\"row\"><p class=\"dark-grey-text\">{{item.author_name}}</p></div>\n              </div>\n              <div class=\"col\">\n                <div class=\"row\">\n                  <h5><span class=\"badge badge-success\">{{item.price}}</span></h5> &nbsp; &nbsp;\n                  <h5><span class=\"badge badge-warning\">{{item.condition}}</span></h5>\n                </div>\n                <div class=\"row\">\n\n                </div>\n              </div>\n\n            </div>\n\n          </div>\n      </div>\n    </div>\n    <div class=\"col-6\">\n\n      <section class=\"\">\n\n        <!--Main wrapper-->\n        <div class=\"comments-list\" style=\"margin-top: 40px\">\n          <div class=\"section-heading\" style=\"margin-left:35%;\">\n            <h3>Messages <span class=\"badge blue\">{{messageSets.length}}</span></h3>\n          </div>\n          <!--First row-->\n          <div class=\"row\" *ngFor=\"let message of messageSets;\">\n            <!--Content column-->\n            <div class=\"col-sm-10 col-12\">\n              <a><h3 class=\"user-name\">{{message.senderName}}</h3></a>\n              <mat-divider></mat-divider>\n              <div class=\"card-data\">\n                <ul class=\"pl-0 list-unstyled\">\n                  <li class=\"comment-date\"><i class=\"fa fa-clock-o\"></i>{{message.messages[0].createdAt.toLocaleString()}}</li>\n                </ul>\n              </div>\n              <div class=\"comment-text\">\n                <div *ngFor=\"let msg of message.messages\">\n                  {{msg.content}}\n                </div>\n              </div>\n            </div>\n            <mat-divider [inset]=\"true\"></mat-divider>\n            <!--/.Content column-->\n          </div>\n          <!--/.First row-->\n\n        </div>\n        <!--/.Main wrapper-->\n\n      </section>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -925,6 +984,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _message_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../message.service */ "./src/app/message.service.ts");
 /* harmony import */ var _message_set__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../message-set */ "./src/app/message-set.ts");
 /* harmony import */ var _authentication_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../authentication.service */ "./src/app/authentication.service.ts");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -940,16 +1000,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var MessageComponent = /** @class */ (function () {
-    function MessageComponent(listingService, wishlistService, messageService, authService) {
+    function MessageComponent(listingService, wishlistService, messageService, authService, toastr) {
         this.listingService = listingService;
         this.wishlistService = wishlistService;
         this.messageService = messageService;
         this.authService = authService;
+        this.toastr = toastr;
         this.messageSets = [];
     }
     MessageComponent.prototype.ngOnInit = function () {
         this.getUserSpecificListings();
+        this.toastr.info('Please click on the listing to see messages related to it. Thanks!');
     };
     MessageComponent.prototype.getMessages = function (id) {
         var _this = this;
@@ -1006,7 +1069,8 @@ var MessageComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_listing_service__WEBPACK_IMPORTED_MODULE_1__["ListingService"],
             _wishlist_service__WEBPACK_IMPORTED_MODULE_2__["WishlistService"],
             _message_service__WEBPACK_IMPORTED_MODULE_3__["MessageService"],
-            _authentication_service__WEBPACK_IMPORTED_MODULE_5__["AuthenticationService"]])
+            _authentication_service__WEBPACK_IMPORTED_MODULE_5__["AuthenticationService"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]])
     ], MessageComponent);
     return MessageComponent;
 }());
@@ -1033,7 +1097,7 @@ module.exports = ".top-nav-collapse {\n  background-color: #f8bbd0 !important;\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <!-- Intro Section -->\n  <div class=\"view  jarallax\" data-jarallax='{\"speed\": 0.2}' style=\"background-image: url('https://mdbootstrap.com/img/Photos/Others/gradient2.png');\">\n    <div class=\"full-bg-img mask rgba-purple-slight\">\n      <div class=\"container flex-center\">\n\n            <div class=\"card col-6  wow fadeInRight\" data-wow-delay=\"0.3s\">\n              <div class=\"divider-new\" style=\"margin-bottom: 2%;\">\n                <h3 class=\"h3-responsive font-weight-bold blue-text mx-3\">CREATE NEW LISTING</h3>\n              </div>\n              <form  [formGroup]=\"newListingForm\" (ngSubmit)=\"createListing(newListingForm.value)\">\n                <div class=\"md-form\">\n                  <i class=\"fa fa-book prefix\"></i>\n                  <input type=\"text\" id=\"materialFormCardNameEx\" data-error=\"Please enter valid name!\" formControlName=\"book_name\" class=\"form-control\" mdbInputDirective>\n                  <label for=\"materialFormCardNameEx\" class=\"font-weight-light\">Book Name</label>\n                </div>\n\n                <div class=\"md-form\">\n                  <i class=\"fa fa-user prefix\"></i>\n                  <input type=\"email\" id=\"materialFormCardUserEx\" data-error=\"Please enter valid author name!\" formControlName=\"author_name\" class=\"form-control\" mdbInputDirective>\n                  <label for=\"materialFormCardUserEx\" class=\"font-weight-light\">Author Name</label>\n                </div>\n\n                <div class=\"md-form\">\n                  <i class=\"fa fa-rupee prefix\"></i>\n                  <input type=\"text\" id=\"materialFormCardPriceEx\" data-error=\"Please enter valid amount!\" formControlName=\"price\" class=\"form-control\"\n                         mdbInputDirective>\n                  <label for=\"materialFormCardPriceEx\" class=\"font-weight-light\">Price</label>\n                </div>\n\n                <div class=\"md-form\">\n                  <mat-select placeholder=\"Select Condition\" formControlName=\"condition\" class=\"form-control\" mdbInputDirective>\n                    <mat-option *ngFor=\"let condition of conditions\" [value]=\"condition\">\n                      {{condition}}\n                    </mat-option>\n                  </mat-select>\n                </div>\n                <div class=\"md-form\">\n                  <input type=\"file\" id=\"materialFormCardImageEx\"  (change)=\"onFileSelected($event)\"  id=\"image\" formControlName=\"image\" class=\"form-control\"\n                         mdbInputDirective>\n                </div>\n\n                <div class=\"text-center py-4 mt-3\">\n                  <button class=\"btn btn-cyan waves-light\" [disabled]=\"newListingForm.invalid\" type=\"submit\" mdbWavesEffect>Create Listing</button>\n                </div>\n              </form>\n            </div>\n        </div>\n      </div>\n    </div>\n\n</header>\n<!--Main Navigation-->\n\n\n"
+module.exports = "<header>\n  <!-- Intro Section -->\n  <div class=\"view  jarallax\" data-jarallax='{\"speed\": 0.2}' style=\"background-image: url('https://mdbootstrap.com/img/Photos/Others/gradient2.png');\">\n    <div class=\"full-bg-img mask rgba-purple-slight\">\n      <div class=\"container flex-center\">\n\n            <div class=\"card col-6  wow fadeInRight\" data-wow-delay=\"0.3s\">\n              <div class=\"divider-new\" style=\"margin-bottom: 2%;\">\n                <h3 class=\"h3-responsive font-weight-bold blue-text mx-3\">CREATE NEW LISTING</h3>\n              </div>\n              <form  [formGroup]=\"newListingForm\" (ngSubmit)=\"createListing(newListingForm.value)\">\n                <div class=\"md-form\">\n                  <i class=\"fa fa-book prefix\"></i>\n                  <input type=\"text\" id=\"materialFormCardNameEx\" data-error=\"Please enter valid name!\" formControlName=\"book_name\" class=\"form-control\" mdbInputDirective>\n                  <label for=\"materialFormCardNameEx\" class=\"font-weight-light\">Book Name</label>\n                </div>\n\n                <div class=\"md-form\">\n                  <i class=\"fa fa-user prefix\"></i>\n                  <input type=\"email\" id=\"materialFormCardUserEx\" data-error=\"Please enter valid author name!\" formControlName=\"author_name\" class=\"form-control\" mdbInputDirective>\n                  <label for=\"materialFormCardUserEx\" class=\"font-weight-light\">Author Name</label>\n                </div>\n\n                <div class=\"md-form\">\n                  <i class=\"fa fa-rupee prefix\"></i>\n                  <input type=\"text\" id=\"materialFormCardPriceEx\" data-error=\"Please enter valid amount!\" formControlName=\"price\" class=\"form-control\"\n                         mdbInputDirective>\n                  <label for=\"materialFormCardPriceEx\" class=\"font-weight-light\">Price</label>\n                </div>\n\n                <div class=\"md-form\">\n                  <mat-select placeholder=\"Select Condition\" formControlName=\"condition\" class=\"form-control\" mdbInputDirective>\n                    <mat-option *ngFor=\"let condition of conditions\" [value]=\"condition\">\n                      {{condition}}\n                    </mat-option>\n                  </mat-select>\n                </div>\n                <div class=\"md-form\">\n                  <input type=\"file\" id=\"materialFormCardImageEx\"  (change)=\"onFileSelected($event)\"  id=\"image\" formControlName=\"image\" class=\"form-control\">\n                </div>\n\n                <div class=\"text-center py-4 mt-3\">\n                  <button class=\"btn btn-cyan waves-light\" [disabled]=\"newListingForm.invalid\" type=\"submit\" mdbWavesEffect>Create Listing</button>\n                </div>\n              </form>\n            </div>\n        </div>\n      </div>\n    </div>\n\n</header>\n<!--Main Navigation-->\n\n\n"
 
 /***/ }),
 
@@ -1052,6 +1116,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1066,12 +1131,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var NewListingComponent = /** @class */ (function () {
-    function NewListingComponent(listingService, router, http, fb) {
+    function NewListingComponent(listingService, router, http, fb, toastr) {
         this.listingService = listingService;
         this.router = router;
         this.http = http;
         this.fb = fb;
+        this.toastr = toastr;
         this.conditions = ['New', 'Almost new', 'Slightly worn', 'Worn'];
         this.selectedFile = null;
         this.newListingForm = fb.group({
@@ -1095,8 +1162,10 @@ var NewListingComponent = /** @class */ (function () {
         this.http.post('api/listings/add', fd).subscribe(function (res) {
             console.log('res', res);
             _this.router.navigate(['/dashboard']);
+            _this.toastr.success('Listing created and has been added on the dashboard');
         }, function (err) {
             console.log(err);
+            _this.toastr.error(err.error.message);
         });
     };
     NewListingComponent.prototype.onFileSelected = function (event) {
@@ -1108,7 +1177,10 @@ var NewListingComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./new-listing.component.html */ "./src/app/new-listing/new-listing.component.html"),
             styles: [__webpack_require__(/*! ./new-listing.component.css */ "./src/app/new-listing/new-listing.component.css")]
         }),
-        __metadata("design:paramtypes", [_listing_service__WEBPACK_IMPORTED_MODULE_1__["ListingService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]])
+        __metadata("design:paramtypes", [_listing_service__WEBPACK_IMPORTED_MODULE_1__["ListingService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"]])
     ], NewListingComponent);
     return NewListingComponent;
 }());
@@ -1203,6 +1275,8 @@ var SignupComponent = /** @class */ (function () {
             var userObj = { 'id': user.id, 'name': user.name };
             localStorage.setItem('userObject', JSON.stringify(userObj));
             _this.router.navigate(['/dashboard']);
+            window.location.reload();
+            setTimeout(function () { return _this.toastr.success("Welcome to Bookish " + user.name + " !", ' "Books are man\'s best friend", we believe in it and we will help you to find many such friends :) '); }, 1000);
         }, function (err) {
             console.log(err.message);
             _this.toastr.error(err.message);
@@ -1259,6 +1333,11 @@ var WishlistService = /** @class */ (function () {
             bookId: id
         });
     };
+    WishlistService.prototype.deleteWishlistItem = function (id) {
+        return this.http.post("api/wishlist/delete", {
+            bookId: id
+        });
+    };
     WishlistService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -1290,7 +1369,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div *ngFor=\"let listing of wishlist;\" class=\"col-3 card mx-4 p-4\" style=\"box-shadow:2px; margin-bottom:30px;\">-->\n  <!--<h4 class=\"product-name\"><b>{{listing.book_name}}</b></h4>-->\n  <!--<div class=\"product-manufacturer\">{{listing.author_name}}</div>-->\n  <!--<div class=\"row\">-->\n    <!--<div class=\"col m-3 p-2\">-->\n      <!--<b>&#8377; {{listing.price}}</b>-->\n    <!--</div>-->\n  <!--</div>-->\n  <!--<div class=\"row\">-->\n    <!--&lt;!&ndash;<button class=\"col btn btn-primary m-3\" (click)=\"showListing(listing.id)\">Show</button>&ndash;&gt;-->\n    <!--&lt;!&ndash;<button class=\"col btn btn-primary m-3\" (click)=\"addWishlist({{listing.id}})\">Add to Wishlist</button>&ndash;&gt;-->\n  <!--</div>-->\n<!--</div>-->\n\n<div class=\"container\">\n  <div class=\"card card-ecommerce\">\n  <!--Shopping Cart table-->\n  <div class=\"table-responsive\">\n    <table class=\"table product-table\">\n      <!--Table head-->\n      <thead class=\"mdb-color lighten-5\">\n      <tr>\n        <th></th>\n        <th class=\"font-weight-bold\">Product</th>\n        <th class=\"font-weight-bold\">Seller</th>\n        <th class=\"font-weight-bold\">Condition</th>\n        <th class=\"font-weight-bold\">Price</th>\n        <th></th>\n      </tr>\n      </thead>\n      <!--/Table head-->\n\n      <!--Table body-->\n      <tbody>\n\n      <!--First row-->\n      <tr *ngFor=\"let listing of wishlist;\">\n        <th scope=\"row\">\n          <img style=\"width: 180px; height:150px; \" src=\"{{listing.book_image_url}}\" alt=\"\" class=\"img-fluid\">\n        </th>\n        <td>\n          <h5><strong>{{listing.book_name}}</strong></h5>\n          <p class=\"text-muted\">by {{listing.author_name}}</p>\n        </td>\n        <td>{{listing.user_name}}</td>\n        <td>{{listing.condition}}</td>\n        <td>{{listing.price}}</td>\n        <td>\n          <button type=\"button\" class=\"btn btn-tb btn-primary waves-effect waves-light\" (click) = \"deleteWishlistItem(listing.id)\"  data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Remove item\">X\n          </button>\n        </td>\n      </tr>\n      <!--/First row-->\n\n      </tbody>\n      <!--/Table body-->\n    </table>\n  </div>\n  <!--/Shopping Cart table-->\n  </div>\n</div>\n\n\n<!--<div class=\"card card-ecommerce\">-->\n  <!--<div class=\"card-body\">-->\n\n    <!--&lt;!&ndash; Shopping Cart table &ndash;&gt;-->\n    <!--<div class=\"table-responsive\">-->\n\n      <!--<table class=\"table product-table\">-->\n\n        <!--&lt;!&ndash; Table head &ndash;&gt;-->\n        <!--<thead class=\"mdb-color lighten-5\">-->\n        <!--<tr>-->\n          <!--<th></th>-->\n          <!--<th class=\"font-weight-bold\">-->\n            <!--<strong>Product</strong>-->\n          <!--</th>-->\n          <!--<th class=\"font-weight-bold\">-->\n            <!--<strong>Color</strong>-->\n          <!--</th>-->\n          <!--<th></th>-->\n          <!--<th class=\"font-weight-bold\">-->\n            <!--<strong>Price</strong>-->\n          <!--</th>-->\n          <!--<th class=\"font-weight-bold\">-->\n            <!--<strong>QTY</strong>-->\n          <!--</th>-->\n          <!--<th class=\"font-weight-bold\">-->\n            <!--<strong>Amount</strong>-->\n          <!--</th>-->\n          <!--<th></th>-->\n        <!--</tr>-->\n        <!--</thead>-->\n        <!--&lt;!&ndash; /.Table head &ndash;&gt;-->\n\n        <!--&lt;!&ndash; Table body &ndash;&gt;-->\n        <!--<tbody>-->\n\n        <!--&lt;!&ndash; First row &ndash;&gt;-->\n        <!--<tr>-->\n          <!--<th scope=\"row\">-->\n            <!--<img src=\"https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg\" alt=\"\" class=\"img-fluid z-depth-0\">-->\n          <!--</th>-->\n          <!--<td>-->\n            <!--<h5 class=\"mt-3\">-->\n              <!--<strong>iPhone</strong>-->\n            <!--</h5>-->\n            <!--<p class=\"text-muted\">Apple</p>-->\n          <!--</td>-->\n          <!--<td>White</td>-->\n          <!--<td></td>-->\n          <!--<td>$800</td>-->\n          <!--<td class=\"text-center text-md-left\">-->\n            <!--<span class=\"qty\">1 </span>-->\n            <!--<div class=\"btn-group radio-group ml-2\" data-toggle=\"buttons\">-->\n              <!--<label class=\"btn btn-sm btn-primary btn-rounded waves-effect waves-light\">-->\n                <!--<input type=\"radio\" name=\"options\" id=\"option1\">—-->\n              <!--</label>-->\n              <!--<label class=\"btn btn-sm btn-primary btn-rounded waves-effect waves-light\">-->\n                <!--<input type=\"radio\" name=\"options\" id=\"option2\">+-->\n              <!--</label>-->\n            <!--</div>-->\n          <!--</td>-->\n          <!--<td class=\"font-weight-bold\">-->\n            <!--<strong>$800</strong>-->\n          <!--</td>-->\n          <!--<td>-->\n            <!--<button type=\"button\" class=\"btn btn-sm btn-primary waves-effect waves-light\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Remove item\">X-->\n            <!--</button>-->\n          <!--</td>-->\n        <!--</tr>-->\n        <!--&lt;!&ndash; /.First row &ndash;&gt;-->\n\n        <!--&lt;!&ndash; Second row &ndash;&gt;-->\n        <!--<tr>-->\n          <!--<th scope=\"row\">-->\n            <!--<img src=\"https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/6.jpg\" alt=\"\" class=\"img-fluid z-depth-0\">-->\n          <!--</th>-->\n          <!--<td>-->\n            <!--<h5 class=\"mt-3\">-->\n              <!--<strong>Headphones</strong>-->\n            <!--</h5>-->\n            <!--<p class=\"text-muted\">Sony</p>-->\n          <!--</td>-->\n          <!--<td>Red</td>-->\n          <!--<td></td>-->\n          <!--<td>$200</td>-->\n          <!--<td class=\"text-center text-md-left\">-->\n            <!--<span class=\"qty\">3 </span>-->\n            <!--<div class=\"btn-group radio-group ml-2\" data-toggle=\"buttons\">-->\n              <!--<label class=\"btn btn-sm btn-primary btn-rounded waves-effect waves-light\">-->\n                <!--<input type=\"radio\" name=\"options\" id=\"option1\">—-->\n              <!--</label>-->\n              <!--<label class=\"btn btn-sm btn-primary btn-rounded waves-effect waves-light\">-->\n                <!--<input type=\"radio\" name=\"options\" id=\"option2\">+-->\n              <!--</label>-->\n            <!--</div>-->\n          <!--</td>-->\n          <!--<td class=\"font-weight-bold\">-->\n            <!--<strong>$600</strong>-->\n          <!--</td>-->\n          <!--<td>-->\n            <!--<button type=\"button\" class=\"btn btn-sm btn-primary waves-effect waves-light\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Remove item\">X-->\n            <!--</button>-->\n          <!--</td>-->\n        <!--</tr>-->\n        <!--&lt;!&ndash; /.Second row &ndash;&gt;-->\n\n        <!--&lt;!&ndash; Third row &ndash;&gt;-->\n        <!--<tr>-->\n          <!--<th scope=\"row\">-->\n            <!--<img src=\"https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/1.jpg\" alt=\"\" class=\"img-fluid z-depth-0\">-->\n          <!--</th>-->\n          <!--<td>-->\n            <!--<h5 class=\"mt-3\">-->\n              <!--<strong>iPad Pro</strong>-->\n            <!--</h5>-->\n            <!--<p class=\"text-muted\">Apple</p>-->\n          <!--</td>-->\n          <!--<td>Gold</td>-->\n          <!--<td></td>-->\n          <!--<td>$600</td>-->\n          <!--<td class=\"text-center text-md-left\">-->\n            <!--<span class=\"qty\">2 </span>-->\n            <!--<div class=\"btn-group radio-group ml-2\" data-toggle=\"buttons\">-->\n              <!--<label class=\"btn btn-sm btn-primary btn-rounded waves-effect waves-light\">-->\n                <!--<input type=\"radio\" name=\"options\" id=\"option1\">—-->\n              <!--</label>-->\n              <!--<label class=\"btn btn-sm btn-primary btn-rounded waves-effect waves-light\">-->\n                <!--<input type=\"radio\" name=\"options\" id=\"option2\">+-->\n              <!--</label>-->\n            <!--</div>-->\n          <!--</td>-->\n          <!--<td class=\"font-weight-bold\">-->\n            <!--<strong>$1200</strong>-->\n          <!--</td>-->\n          <!--<td>-->\n            <!--<button type=\"button\" class=\"btn btn-sm btn-primary waves-effect waves-light\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Remove item\">X-->\n            <!--</button>-->\n          <!--</td>-->\n        <!--</tr>-->\n        <!--&lt;!&ndash; /.Third row &ndash;&gt;-->\n\n        <!--&lt;!&ndash; Fourth row &ndash;&gt;-->\n        <!--<tr>-->\n          <!--<td colspan=\"3\"></td>-->\n          <!--<td>-->\n            <!--<h4 class=\"mt-2\">-->\n              <!--<strong>Total</strong>-->\n            <!--</h4>-->\n          <!--</td>-->\n          <!--<td class=\"text-right\">-->\n            <!--<h4 class=\"mt-2\">-->\n              <!--<strong>$2600</strong>-->\n            <!--</h4>-->\n          <!--</td>-->\n          <!--<td colspan=\"3\" class=\"text-right\">-->\n            <!--<button type=\"button\" class=\"btn btn-primary btn-rounded waves-effect waves-light\">Complete purchase-->\n              <!--<i class=\"fa fa-angle-right right\"></i>-->\n            <!--</button>-->\n          <!--</td>-->\n        <!--</tr>-->\n        <!--&lt;!&ndash; Fourth row &ndash;&gt;-->\n\n        <!--</tbody>-->\n        <!--&lt;!&ndash; /.Table body &ndash;&gt;-->\n\n      <!--</table>-->\n\n    <!--</div>-->\n    <!--&lt;!&ndash; /.Shopping Cart table &ndash;&gt;-->\n\n  <!--</div>-->\n\n<!--</div>-->\n"
+module.exports = "<!--<div *ngFor=\"let listing of wishlist;\" class=\"col-3 card mx-4 p-4\" style=\"box-shadow:2px; margin-bottom:30px;\">-->\n  <!--<h4 class=\"product-name\"><b>{{listing.book_name}}</b></h4>-->\n  <!--<div class=\"product-manufacturer\">{{listing.author_name}}</div>-->\n  <!--<div class=\"row\">-->\n    <!--<div class=\"col m-3 p-2\">-->\n      <!--<b>&#8377; {{listing.price}}</b>-->\n    <!--</div>-->\n  <!--</div>-->\n  <!--<div class=\"row\">-->\n    <!--&lt;!&ndash;<button class=\"col btn btn-primary m-3\" (click)=\"showListing(listing.id)\">Show</button>&ndash;&gt;-->\n    <!--&lt;!&ndash;<button class=\"col btn btn-primary m-3\" (click)=\"addWishlist({{listing.id}})\">Add to Wishlist</button>&ndash;&gt;-->\n  <!--</div>-->\n<!--</div>-->\n\n<div class=\"container\">\n  <div class=\"card card-ecommerce\">\n  <!--Shopping Cart table-->\n  <div class=\"table-responsive\">\n    <table class=\"table product-table\">\n      <!--Table head-->\n      <thead class=\"mdb-color lighten-5\">\n      <tr>\n        <th></th>\n        <th class=\"font-weight-bold\">Product</th>\n        <th class=\"font-weight-bold\">Seller</th>\n        <th class=\"font-weight-bold\">Condition</th>\n        <th class=\"font-weight-bold\">Price</th>\n        <th></th>\n      </tr>\n      </thead>\n      <!--/Table head-->\n\n      <!--Table body-->\n      <tbody>\n\n      <!--First row-->\n      <tr *ngFor=\"let listing of wishlist;\">\n        <th scope=\"row\">\n          <img style=\"width: 180px; height:150px; \" src=\"{{listing.book_image_url}}\" alt=\"\" class=\"img-fluid\">\n        </th>\n        <td>\n          <h5><strong>{{listing.book_name}}</strong></h5>\n          <p class=\"text-muted\">by {{listing.author_name}}</p>\n        </td>\n        <td>{{listing.user_name}}</td>\n        <td>{{listing.condition}}</td>\n        <td>{{listing.price}}</td>\n        <td>\n          <button type=\"button\" class=\"btn btn-tb btn-primary waves-effect waves-light\" (click) = \"deleteWishlistItem(listing.id)\"  data-toggle=\"tooltip\" data-placement=\"top\" title=\"\" data-original-title=\"Remove item\">X\n          </button>\n        </td>\n      </tr>\n      <!--/First row-->\n\n      </tbody>\n      <!--/Table body-->\n    </table>\n  </div>\n  <!--/Shopping Cart table-->\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1335,7 +1414,7 @@ var WishlistComponent = /** @class */ (function () {
         });
     };
     WishlistComponent.prototype.deleteWishlistItem = function (id) {
-        this.listingService.deleteWishlistItem(id).subscribe(function (item) {
+        this.wishlistService.deleteWishlistItem(id).subscribe(function (item) {
             console.log(item);
         }, function (err) {
             console.log(err);
