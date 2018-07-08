@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const db = new Sequelize('heroku_7697999bfbc1608', 'b5f842e84e26ba', 'c78bdf37' {
+const db = new Sequelize('heroku_7697999bfbc1608', 'b5f842e84e26ba', 'c78bdf37', {
     host: 'us-cdbr-iron-east-04.cleardb.net',
     dialect: 'mysql',
     pool:{
