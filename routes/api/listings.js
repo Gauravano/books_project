@@ -82,20 +82,20 @@ route.get('/filter', (req, res) => {
 
 conditions = [];
 
-console.log('Author name: ',req.query.author_name, req.query.price);
+// console.log('Author name: ',req.query.author_name,'price', req.query.price, 'book name', req.query.book_name, 'condition ',req.query.condition, 'cdcd', req.query.price == '');
 
-if(req.query.author_name != undefined){
+if(req.query.author_name != ''){
     conditions.push({ 'author_name': { like: '%' + req.query.author_name + '%' } });
 }
 
-if(req.query.book_name != undefined){
+if(req.query.book_name != ''){
     conditions.push({ 'book_name': { like: '%' + req.query.book_name + '%' } });
 }
-if(req.query.condition != undefined){
+if(req.query.condition != ''){
     conditions.push({ 'condition': req.query.condition });
 }
-if(req.query.price != undefined){
-    conditions.push({ 'book_name': { like: '%' + req.query.book_name + '%' } });
+if(req.query.price != ''){
+    conditions.push({ 'price': { between: [0, req.query.price]} });
 }
 
 console.log('conditions');
