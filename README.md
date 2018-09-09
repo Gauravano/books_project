@@ -19,7 +19,7 @@ Run `npm start` or `node server` for a running development server. Navigate to `
 
 ## Demo
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/GlPkRenDdwc/0.jpg)](https://www.youtube.com/watch?v=GlPkRenDdwc)
+[![Bookish Dashboard](https://github.com/gauravano/Bookish_frontend/blob/master/screenshots/bookish_dashboard.png)](https://www.youtube.com/watch?v=GlPkRenDdwc)
 
 The **Bookish** website is live at http://bookish-v1.herokuapp.com.
  
